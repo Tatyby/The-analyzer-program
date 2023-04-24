@@ -9,14 +9,14 @@ public class Main {
     public static String c = "c";
     public static int sizeQuele = 100;
     public static String letters = "abc";
-    public static int textLength = 100;
+    public static int textLength =500;
     public static int strCount = 10_000;
 
     public static BlockingQueue<String> queueA = new ArrayBlockingQueue<>(sizeQuele, true);
     public static BlockingQueue<String> queueB = new ArrayBlockingQueue<>(sizeQuele, true);
     public static BlockingQueue<String> queueC = new ArrayBlockingQueue<>(sizeQuele, true);
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args){
 
 
         new Thread(() -> {
@@ -30,7 +30,6 @@ public class Main {
                     return;
                 }
             }
-            //printQuele(queue1);
         }).start();
 
 
@@ -41,7 +40,7 @@ public class Main {
         });
 
         searchSumbolA.start();
-        searchSumbolA.join();
+       // searchSumbolA.join();
 
         Thread searchSumbolB = new Thread(() -> {
 
@@ -49,7 +48,7 @@ public class Main {
         });
 
         searchSumbolB.start();
-        searchSumbolB.join();
+       // searchSumbolB.join();
 
         Thread searchSumbolC = new Thread(() -> {
 
@@ -57,7 +56,7 @@ public class Main {
         });
 
         searchSumbolC.start();
-        searchSumbolC.join();
+      //  searchSumbolC.join();
     }
 
     public static String generateText(String letters, int length) {
