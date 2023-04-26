@@ -9,14 +9,14 @@ public class Main {
     public static String c = "c";
     public static int sizeQuele = 100;
     public static String letters = "abc";
-    public static int textLength =500;
+    public static int textLength = 100_000;
     public static int strCount = 10_000;
 
     public static BlockingQueue<String> queueA = new ArrayBlockingQueue<>(sizeQuele, true);
     public static BlockingQueue<String> queueB = new ArrayBlockingQueue<>(sizeQuele, true);
     public static BlockingQueue<String> queueC = new ArrayBlockingQueue<>(sizeQuele, true);
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
 
         new Thread(() -> {
@@ -33,14 +33,13 @@ public class Main {
         }).start();
 
 
-
         Thread searchSumbolA = new Thread(() -> {
 
             searchForTheMaximumNumberOfCharacters(queueA, a);
         });
 
         searchSumbolA.start();
-       // searchSumbolA.join();
+
 
         Thread searchSumbolB = new Thread(() -> {
 
@@ -48,7 +47,7 @@ public class Main {
         });
 
         searchSumbolB.start();
-       // searchSumbolB.join();
+
 
         Thread searchSumbolC = new Thread(() -> {
 
@@ -56,7 +55,7 @@ public class Main {
         });
 
         searchSumbolC.start();
-      //  searchSumbolC.join();
+
     }
 
     public static String generateText(String letters, int length) {
@@ -71,21 +70,19 @@ public class Main {
     public static void searchForTheMaximumNumberOfCharacters(BlockingQueue<String> queue, String symbol) {
         int countMax = 0;
         String str = null;
-        for (int i = 0; i < queue.size(); i++) {
-            int count;
+        for (int i = 0; i < strCount; i++) {
             try {
-                count = queue.take().length() - queue.take().replace(symbol, "").length();
+                int count;
+                String take = queue.take();
+                count = take.length() - take.replace(symbol, "").length();
+                if (count > countMax) {
+                    countMax = count;
+                    str = take;
+                }
             } catch (InterruptedException e) {
                 return;
             }
-            if (count > countMax) {
-                countMax = count;
-                try {
-                    str = queue.take();
-                } catch (InterruptedException e) {
-                    return;
-                }
-            }
+
         }
         System.out.printf("строка с максимальным вхождением символа %s : %s ", symbol, str);
         System.out.println();
